@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css"
+      integrity="sha512-4xo8blKMVCiXpTaLzQSLSw3KFOVPWhm/TRtuPVc4WG6kUgjH6J03IBuG7JZPkcWMxJ5huwaBpOpnwYElP/m6wg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/2-snackbar.css" />
+    <title>Snackbar</title>
+  </head>
+  <body>
+    <section>
+      <a href="./index.html">Go to home</a>
+      <form class="form">
+        <label class="label-input-number">
+          Delay (ms)
+          <input class="inputNumber" type="number" name="delay" required />
+        </label>
+        <fieldset class="fieldset">
+          <legend>State</legend>
+          <div class="input-item">
+          <label class="label-Fulfilled">
+            <input
+              class="inputFulfilled"
+              type="radio"
+              name="state"
+              value="fulfilled"
+              required
+            />
+            Fulfilled
+          </label>
+          <label>
+            <input
+              class="inputRejected"
+              type="radio"
+              name="state"
+              value="rejected"
+              required
+            />
+            Rejected
+          </label>
+          </div>
+        </fieldset>
+        <button class="btn" type="submit">Create notification</button>
+      </form>
+    </section>
+    <script src="./js/2-snackbar.js" defer type="module"></script>
+  </body>
+</html>
