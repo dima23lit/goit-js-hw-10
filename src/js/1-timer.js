@@ -13,6 +13,7 @@ const daysD = document.querySelector('[data-days]');
 const hoursD = document.querySelector('[data-hours]');
 const minutesD = document.querySelector('[data-minutes]');
 const secondsD = document.querySelector('[data-seconds]');
+const datetimePicker = document.querySelector('#datetime-picker');
 let isActive = false;
 
 
@@ -33,12 +34,12 @@ const options = {
             btn.disabled = true;
             // alert("Please choose a date in the future")
             iziToast.show({
-                title: 'Hey',
                 message: 'Please choose a date in the future',
                 position: 'topRight',
-                backgroundColor: 'red',
+                backgroundColor: '#EF4040',
                 titleColor: '#fff',
-                messageColor: '#fff'
+                messageColor: '#fff',
+                close: true
             });
         }
     }
@@ -66,10 +67,11 @@ function handlerTimer() {
         time = convertMs(deltaTime);
         timerText(time)
         btn.disabled = true;
+        datetimePicker.disabled = true;
 
         if (time.days <= 0 && time.hours <= 0 && time.minutes <= 0 && time.seconds <= 0) {
             clearInterval(timerInterval)
-            btn.disabled = false;
+            datetimePicker.disabled = false;
         }
 
     }, 1000
