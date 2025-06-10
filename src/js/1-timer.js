@@ -16,10 +16,11 @@ const secondsD = document.querySelector('[data-seconds]');
 const datetimePicker = document.querySelector('#datetime-picker');
 let isActive = false;
 
-
 btn.disabled = true;
 
 let userSelectedDate;
+
+let previousSelectedDate = null;
 
 const options = {
     enableTime: true,
@@ -27,23 +28,32 @@ const options = {
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates) {
-        if (options.defaultDate < selectedDates[0]) {
-            btn.disabled = false;
-            userSelectedDate = selectedDates[0];
-        } else {
-            btn.disabled = true;
-            // alert("Please choose a date in the future")
-            iziToast.show({
-                message: 'Please choose a date in the future',
-                position: 'topRight',
-                backgroundColor: '#EF4040',
-                titleColor: '#fff',
-                messageColor: '#fff',
-                close: true
-            });
+      const pickedDate = selectedDates[0];
+  
+      const isDateChanged = !previousSelectedDate || pickedDate.getTime() !== previousSelectedDate.getTime();
+  
+      if (pickedDate > new Date()) {
+        userSelectedDate = pickedDate;
+  
+        if (isDateChanged) {
+          btn.disabled = false;
+          isActive = false;
         }
-    }
-  };
+  
+        previousSelectedDate = pickedDate;
+      } else {
+        btn.disabled = true;
+        iziToast.show({
+          message: 'Please choose a date in the future',
+          position: 'topRight',
+          backgroundColor: '#EF4040',
+          titleColor: '#fff',
+          messageColor: '#fff',
+          close: true,
+        });
+      }
+    },
+  }
 
 flatpickr("#datetime-picker", options);
 
@@ -51,12 +61,13 @@ flatpickr("#datetime-picker", options);
 btn.addEventListener('click', handlerTimer);
 
 
-function handlerTimer() {
-    if (isActive) {
-        return
-    }
+function handlerTimer(event) {
+    if (isActive || !userSelectedDate) return;
 
+    console.log(event)
     isActive = true;
+    btn.disabled = true;
+    datetimePicker.disabled = true;
 
     const userSelectedDateMS = userSelectedDate.getTime();
     let time;
@@ -66,8 +77,6 @@ function handlerTimer() {
         deltaTime = userSelectedDateMS - currentTime;
         time = convertMs(deltaTime);
         timerText(time)
-        btn.disabled = true;
-        datetimePicker.disabled = true;
 
         if (time.days <= 0 && time.hours <= 0 && time.minutes <= 0 && time.seconds <= 0) {
             clearInterval(timerInterval)
@@ -77,6 +86,7 @@ function handlerTimer() {
     }, 1000
     )
 }
+
 
 
 function timerText({ days, hours, minutes, seconds }) {
